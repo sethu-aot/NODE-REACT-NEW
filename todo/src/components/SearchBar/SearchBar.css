@@ -1,0 +1,40 @@
+.SearchContainer {
+    max-width: 1312px;
+    gap: 20px;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 32px;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 17.07px;
+    font-family: "Montserrat";
+
+}
+
+.searchbox {
+    display: flex;
+    align-items: center;
+    max-width: 578px;
+    padding: 10px 14px 10px 14px;
+    gap: 8px;
+    border-radius: 8px;
+
+}
+
+.SearchContainer input {
+    display: flex;
+    max-width: 578px;
+    width: 100%;
+    padding: 10px 14px 10px 14px;
+    gap: 8px;
+    border-radius: 8px;
+    border: 1px solid #CECECE;
+}
+
+.SearchContainer select {
+    max-width: 156px;
+    padding: 10px 14px;
+    gap: 10px;
+    border-radius: 5px;
+    border: 1px solid #CECECE
+}

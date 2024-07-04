@@ -1,0 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+.NavBarHeader {
+    display: flex;
+    justify-content: space-between;
+    max-width: 1312px;
+    gap: 12px;
+    align-items: center;
+    border-bottom: 1px solid #D0D5DD
+
+}
+
+.NavBarHeader p {
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 32px;
+
+}
+
+.NavBarHeader button {
+    display: flex;
+    max-width: 143px;
+    padding: 10px 20px;
+    gap: 8px;
+    border-radius: 5px;
+    background: #0C39C7;
+    color: #fff;
+    border: none;
+    font-family: "Montserrat";
+}

@@ -1,0 +1,32 @@
+.modalContainer {
+    display: flex;
+    flex-direction: column;
+    max-width: 654px;
+    top: 79px;
+    left: 409px;
+    padding: 40px;
+    gap: 32px;
+    border-radius: 12px;
+    border: 1px;
+    border: #D0D5DD 1px solid;
+
+}
+
+.modalHeader {
+    display: flex;
+    justify-content: space-between;
+}
+
+.modalContents {
+    display: flex;
+    flex-direction: column;
+}
+
+.modalContents input, textarea{
+    max-width: 574px;
+    padding: 14px 16px 14px 16px;
+    gap: 10px;
+    border-radius: 8px;
+    border: 1px solid #D0D5DD;
+
+}
