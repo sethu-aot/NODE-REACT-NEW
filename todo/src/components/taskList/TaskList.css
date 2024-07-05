@@ -35,14 +35,12 @@
 
 }
 
-.taskHeader {
+.taskCardHeader {
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
-.taskCardButtons {
-    display: flex;
-    Gap: 16px;
-
+.taskCardContents {
+    width: 100%;
 }

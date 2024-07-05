@@ -27,16 +27,14 @@ function TaskList({ tasks, handleTaskStatusChange }) {
                   onChange={() => handleTaskStatusChange(task.id, !task.isCompleted)}
                 />
               </div>
-              <div>
-
-                <div className='taskHeader'>
+              <div className='taskCardContents'>
+                <div className='taskCardHeader'>
                 <h3>{task.taskTitle}</h3>
                 <div className='taskCardButtons'>
-                  <img src={editButton} alt="edit Button" />
-                  <img src={deleteButton} alt="delete Button" />
+                  <img src={editButton} alt="edit button" />
+                  <img src={deleteButton} alt="delete button" />
                 </div>
                 </div>
-
                 <p>{task.taskDescription}</p>
                 <p>by {task.dueDate}</p>
               </div>
@@ -61,8 +59,14 @@ function TaskList({ tasks, handleTaskStatusChange }) {
                   onChange={() => handleTaskStatusChange(task.id, !task.isCompleted)}
                 />
               </div>
-              <div>
+              <div className='taskCardContents'>
+                <div className='taskCardHeader'>
                 <h3>{task.taskTitle}</h3>
+                <div className='taskCardButtons'>
+                  <img src={editButton} alt="edit button" />
+                  <img src={deleteButton} alt="delete button" />
+                </div>
+                </div>
                 <p>{task.taskDescription}</p>
                 <p>by {task.dueDate}</p>
               </div>
