@@ -34,3 +34,15 @@
     border: none;
 
 }
+
+.taskHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.taskCardButtons {
+    display: flex;
+    Gap: 16px;
+
+}

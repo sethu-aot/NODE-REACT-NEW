@@ -2,6 +2,8 @@
 // eslint-disable-next-line no-unused-vars
 import React from 'react';
 import './TaskList.css';
+import editButton from '../../assets/images/edit.svg';
+import deleteButton from '../../assets/images/delete.svg';
 
 function TaskList({ tasks, handleTaskStatusChange }) {
   const activeTasks = tasks.filter(task => !task.isCompleted);
@@ -26,7 +28,15 @@ function TaskList({ tasks, handleTaskStatusChange }) {
                 />
               </div>
               <div>
+
+                <div className='taskHeader'>
                 <h3>{task.taskTitle}</h3>
+                <div className='taskCardButtons'>
+                  <img src={editButton} alt="edit Button" />
+                  <img src={deleteButton} alt="delete Button" />
+                </div>
+                </div>
+
                 <p>{task.taskDescription}</p>
                 <p>by {task.dueDate}</p>
               </div>
