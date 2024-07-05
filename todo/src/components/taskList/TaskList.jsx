@@ -5,7 +5,7 @@ import './TaskList.css';
 import editButton from '../../assets/images/edit.svg';
 import deleteButton from '../../assets/images/delete.svg';
 
-function TaskList({ tasks, handleTaskStatusChange }) {
+function TaskList({ tasks, handleTaskStatusChange, displayEditTaskModal }) {
   const activeTasks = tasks.filter(task => !task.isCompleted);
   const completedTasks = tasks.filter(task => task.isCompleted);
 
@@ -29,11 +29,11 @@ function TaskList({ tasks, handleTaskStatusChange }) {
               </div>
               <div className='taskCardContents'>
                 <div className='taskCardHeader'>
-                <h3>{task.taskTitle}</h3>
-                <div className='taskCardButtons'>
-                  <img src={editButton} alt="edit button" />
-                  <img src={deleteButton} alt="delete button" />
-                </div>
+                  <h3>{task.taskTitle}</h3>
+                  <div className='taskCardButtons'>
+                    <img src={editButton} alt="edit button" onClick={() => displayEditTaskModal(task)} />
+                    <img src={deleteButton} alt="delete button" />
+                  </div>
                 </div>
                 <p>{task.taskDescription}</p>
                 <p>by {task.dueDate}</p>
@@ -61,11 +61,11 @@ function TaskList({ tasks, handleTaskStatusChange }) {
               </div>
               <div className='taskCardContents'>
                 <div className='taskCardHeader'>
-                <h3>{task.taskTitle}</h3>
-                <div className='taskCardButtons'>
-                  <img src={editButton} alt="edit button" />
-                  <img src={deleteButton} alt="delete button" />
-                </div>
+                  <h3>{task.taskTitle}</h3>
+                  <div className='taskCardButtons'>
+                    <img src={editButton} alt="edit button" onClick={() => displayEditTaskModal(task)} />
+                    <img src={deleteButton} alt="delete button" />
+                  </div>
                 </div>
                 <p>{task.taskDescription}</p>
                 <p>by {task.dueDate}</p>
