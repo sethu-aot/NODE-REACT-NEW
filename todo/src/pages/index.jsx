@@ -54,6 +54,15 @@ function Index() {
     }
   };
 
+  const handleTaskStatusChange = async (taskId, isCompleted) => {
+    try {
+      await api.patch(`/tasks/${taskId}/status`, { isCompleted });
+      fetchTasks(); // Refresh the task list after updating a task's status
+    } catch (error) {
+      console.error('Error updating task status:', error);
+    }
+  };
+
   return (
     <div>
       <NavBar displayModal={displayModal} />
@@ -67,7 +76,7 @@ function Index() {
           closeModal={displayModal}
         />
       )}
-      <TaskList tasks={tasks} />
+      <TaskList tasks={tasks} handleTaskStatusChange={handleTaskStatusChange} />
     </div>
   );
 }

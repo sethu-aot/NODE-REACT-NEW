@@ -3,19 +3,59 @@
 import React from 'react';
 import './TaskList.css';
 
-function TaskList({ tasks }) {
+function TaskList({ tasks, handleTaskStatusChange }) {
+  const activeTasks = tasks.filter(task => !task.isCompleted);
+  const completedTasks = tasks.filter(task => task.isCompleted);
+
   return (
     <div>
       <h2>Active Tasks</h2>
-      {tasks.length === 0 ? (
-        <p>No tasks available</p>
+      {activeTasks.length === 0 ? (
+        <p>No active tasks available</p>
       ) : (
-        <ul>
-          {tasks.map(task => (
-            <li key={task.id}>
-              <h3>{task.taskTitle}</h3>
-              <p>{task.taskDescription}</p>
-              <p>Due Date: {task.dueDate}</p>
+        <ul className='taskContainer'>
+          {activeTasks.map(task => (
+            <li key={task.id} className='taskCard'>
+              <div>
+                <input
+                  type="checkbox"
+                  id="checkbox"
+                  className='checkbox'
+                  checked={task.isCompleted}
+                  onChange={() => handleTaskStatusChange(task.id, !task.isCompleted)}
+                />
+              </div>
+              <div>
+                <h3>{task.taskTitle}</h3>
+                <p>{task.taskDescription}</p>
+                <p>by {task.dueDate}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      )}
+
+      <h2>Completed Tasks</h2>
+      {completedTasks.length === 0 ? (
+        <p>No completed tasks available</p>
+      ) : (
+        <ul className='taskContainer'>
+          {completedTasks.map(task => (
+            <li key={task.id} className='taskCard'>
+              <div>
+                <input
+                  type="checkbox"
+                  id="checkbox"
+                  className='checkbox'
+                  checked={task.isCompleted}
+                  onChange={() => handleTaskStatusChange(task.id, !task.isCompleted)}
+                />
+              </div>
+              <div>
+                <h3>{task.taskTitle}</h3>
+                <p>{task.taskDescription}</p>
+                <p>by {task.dueDate}</p>
+              </div>
             </li>
           ))}
         </ul>

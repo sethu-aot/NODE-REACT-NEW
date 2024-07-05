@@ -27,14 +27,14 @@ app.post('/tasks', (req, res) => {
     if (!taskTitle || !taskDescription || !dueDate) {
         return res.status(400).json({ error: "Invalid input: Title/Description/Due Date is absent" });
     }
-    const newTask = { id, taskTitle, taskDescription, dueDate };
+    const newTask = { id, taskTitle, taskDescription, dueDate, isCompleted: false };
     datas.push(newTask);
     res.json(newTask);
 });
 
 app.put('/tasks/:id', (req, res) => {
     const id = req.params.id;
-    const { taskTitle, taskDescription, dueDate } = req.body;
+    const { taskTitle, taskDescription, dueDate, isCompleted } = req.body;
     const task = datas.find(task => task.id == id);
     if (!task) {
         return res.status(404).json({ error: "No task found with that ID" });
@@ -42,6 +42,18 @@ app.put('/tasks/:id', (req, res) => {
     task.taskTitle = taskTitle;
     task.taskDescription = taskDescription;
     task.dueDate = dueDate;
+    task.isCompleted = isCompleted;
+    res.json(task);
+});
+
+app.patch('/tasks/:id/status', (req, res) => {
+    const id = req.params.id;
+    const { isCompleted } = req.body;
+    const task = datas.find(task => task.id == id);
+    if (!task) {
+        return res.status(404).json({ error: "No task found with that ID" });
+    }
+    task.isCompleted = isCompleted;
     res.json(task);
 });
 
