@@ -5,7 +5,7 @@ import './TaskList.css';
 import editButton from '../../assets/images/edit.svg';
 import deleteButton from '../../assets/images/delete.svg';
 
-function TaskList({ tasks, handleTaskStatusChange, displayEditTaskModal }) {
+function TaskList({ tasks, handleTaskStatusChange, displayEditTaskModal, displayDeleteModal }) {
   const activeTasks = tasks.filter(task => !task.isCompleted);
   const completedTasks = tasks.filter(task => task.isCompleted);
 
@@ -32,7 +32,7 @@ function TaskList({ tasks, handleTaskStatusChange, displayEditTaskModal }) {
                   <h3>{task.taskTitle}</h3>
                   <div className='taskCardButtons'>
                     <img src={editButton} alt="edit button" onClick={() => displayEditTaskModal(task)} />
-                    <img src={deleteButton} alt="delete button" />
+                    <img src={deleteButton} alt="delete button" onClick={() => displayDeleteModal(task.id)} /> {/* Pass task ID */}
                   </div>
                 </div>
                 <p>{task.taskDescription}</p>
@@ -64,7 +64,7 @@ function TaskList({ tasks, handleTaskStatusChange, displayEditTaskModal }) {
                   <h3>{task.taskTitle}</h3>
                   <div className='taskCardButtons'>
                     <img src={editButton} alt="edit button" onClick={() => displayEditTaskModal(task)} />
-                    <img src={deleteButton} alt="delete button" />
+                    <img src={deleteButton} alt="delete button" onClick={() => displayDeleteModal(task.id)} /> {/* Pass task ID */}
                   </div>
                 </div>
                 <p>{task.taskDescription}</p>

@@ -3,9 +3,10 @@ import React, { useState, useEffect } from 'react';
 import NavBar from '../components/NavBar/NavBar';
 import SearchBar from '../components/SearchBar/SearchBar';
 import AddTaskModal from '../components/Modal/AddTaskModal';
-import EditTaskModal from '../components/Modal/editTaskModal'; // Import the EditTaskModal
+import EditTaskModal from '../components/Modal/editTaskModal'; // Corrected import
 import TaskList from '../components/taskList/TaskList';
 import api from '../api';
+import DeleteModal from '../components/Modal/DeleteModal';
 
 function Index() {
   const [showAddTaskModal, setShowAddTaskModal] = useState(false);
@@ -15,6 +16,8 @@ function Index() {
   const [description, setDescription] = useState('');
   const [dueDate, setDueDate] = useState('');
   const [editTask, setEditTask] = useState(null); // Add state for the task being edited
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [taskToDelete, setTaskToDelete] = useState(null);
 
   useEffect(() => {
     fetchTasks();
@@ -94,6 +97,26 @@ function Index() {
     }
   };
 
+  const handleDelete = async () => {
+    try {
+      await api.delete(`/tasks/${taskToDelete}`);
+      fetchTasks();
+      closeModal();
+    } catch (error) {
+      console.error('Error deleting task:', error);
+    }
+  };
+
+  const displayDeleteModal = (taskId) => {
+    setTaskToDelete(taskId);
+    setShowDeleteModal(true);
+  };
+
+  const closeModal = () => {
+    setShowDeleteModal(false);
+    setTaskToDelete(null);
+  };
+
   return (
     <div>
       <NavBar displayModal={displayModal} />
@@ -117,7 +140,19 @@ function Index() {
           closeModal={() => setShowEditTaskModal(false)}
         />
       )}
-      <TaskList tasks={tasks} handleTaskStatusChange={handleTaskStatusChange} displayEditTaskModal={displayEditTaskModal} />
+      <TaskList 
+        tasks={tasks} 
+        handleTaskStatusChange={handleTaskStatusChange} 
+        displayEditTaskModal={displayEditTaskModal} 
+        displayDeleteModal={displayDeleteModal} // Pass the delete modal function
+      />
+      
+      {showDeleteModal && (
+        <DeleteModal
+          handleDelete={handleDelete}
+          closeModal={closeModal}
+        />
+      )}
     </div>
   );
 }
