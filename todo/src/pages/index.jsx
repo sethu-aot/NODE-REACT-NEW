@@ -3,21 +3,24 @@ import React, { useState, useEffect } from 'react';
 import NavBar from '../components/NavBar/NavBar';
 import SearchBar from '../components/SearchBar/SearchBar';
 import AddTaskModal from '../components/Modal/AddTaskModal';
-import EditTaskModal from '../components/Modal/editTaskModal'; // Corrected import
+import EditTaskModal from '../components/Modal/editTaskModal';
 import TaskList from '../components/taskList/TaskList';
 import api from '../api';
 import DeleteModal from '../components/Modal/DeleteModal';
 
 function Index() {
   const [showAddTaskModal, setShowAddTaskModal] = useState(false);
-  const [showEditTaskModal, setShowEditTaskModal] = useState(false); // Add state for EditTaskModal
+  const [showEditTaskModal, setShowEditTaskModal] = useState(false);
   const [tasks, setTasks] = useState([]);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [dueDate, setDueDate] = useState('');
-  const [editTask, setEditTask] = useState(null); // Add state for the task being edited
+  const [editTask, setEditTask] = useState(null);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [taskToDelete, setTaskToDelete] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [sortOrder, setSortOrder] = useState('newest');
+
 
   useEffect(() => {
     fetchTasks();
@@ -68,14 +71,15 @@ function Index() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const newTask = { taskTitle: title, taskDescription: description, dueDate };
+      const newTask = { taskTitle: title, taskDescription: description, dueDate, createdAt: Date.now() };
       await api.post('/tasks', newTask);
       fetchTasks(); // Refresh the task list after adding a new task
       displayModal(); // Close the modal after successful task creation
     } catch (error) {
       console.error('Error creating task:', error);
     }
-  };
+};
+
 
   const handleEditSubmit = async (e) => {
     e.preventDefault();
@@ -107,6 +111,16 @@ function Index() {
     }
   };
 
+  const clearCompletedTasks = async () => {
+    try {
+        await api.delete('/tasks/completed');
+        fetchTasks(); // Refresh the task list after deleting completed tasks
+    } catch (error) {
+        console.error('Error deleting completed tasks:', error);
+    }
+};
+
+
   const displayDeleteModal = (taskId) => {
     setTaskToDelete(taskId);
     setShowDeleteModal(true);
@@ -117,10 +131,37 @@ function Index() {
     setTaskToDelete(null);
   };
 
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const handleSortChange = (e) => {
+    setSortOrder(e.target.value);
+  };
+
+  const filterAndSortTasks = (tasks) => {
+    let filteredTasks = tasks.filter(task =>
+      task.taskTitle.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
+    filteredTasks = filteredTasks.sort((a, b) => {
+      if (sortOrder === 'newest') {
+        return b.createdAt - a.createdAt;
+      } else {
+        return a.createdAt - b.createdAt;
+      }
+    });
+
+    return filteredTasks;
+};
+
+
+  const filteredTasks = filterAndSortTasks(tasks);
+
   return (
     <div>
       <NavBar displayModal={displayModal} />
-      <SearchBar />
+      <SearchBar handleSearchChange={handleSearchChange} handleSortChange={handleSortChange} />
       {showAddTaskModal && (
         <AddTaskModal
           handleTitleChange={handleTitleChange}
@@ -141,11 +182,13 @@ function Index() {
         />
       )}
       <TaskList 
-        tasks={tasks} 
+        tasks={filteredTasks} 
         handleTaskStatusChange={handleTaskStatusChange} 
         displayEditTaskModal={displayEditTaskModal} 
-        displayDeleteModal={displayDeleteModal} // Pass the delete modal function
+        displayDeleteModal={displayDeleteModal}
+        clearCompletedTasks={clearCompletedTasks} // Pass the function as a prop
       />
+
       
       {showDeleteModal && (
         <DeleteModal

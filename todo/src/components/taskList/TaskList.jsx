@@ -5,7 +5,7 @@ import './TaskList.css';
 import editButton from '../../assets/images/edit.svg';
 import deleteButton from '../../assets/images/delete.svg';
 
-function TaskList({ tasks, handleTaskStatusChange, displayEditTaskModal, displayDeleteModal }) {
+function TaskList({ tasks, handleTaskStatusChange, displayEditTaskModal, displayDeleteModal, clearCompletedTasks }) {
   const activeTasks = tasks.filter(task => !task.isCompleted);
   const completedTasks = tasks.filter(task => task.isCompleted);
 
@@ -42,8 +42,12 @@ function TaskList({ tasks, handleTaskStatusChange, displayEditTaskModal, display
           ))}
         </ul>
       )}
-
-      <h2>Completed Tasks</h2>
+      
+      <div className="completedTasksHeading">
+        <h2>Completed Tasks</h2>
+        <button onClick={clearCompletedTasks}>Clear Completed Tasks</button>
+      </div>
+      
       {completedTasks.length === 0 ? (
         <p>No completed tasks available</p>
       ) : (

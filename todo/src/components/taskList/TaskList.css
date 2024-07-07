@@ -44,3 +44,9 @@
 .taskCardContents {
     width: 100%;
 }
+
+.completedTasksHeading {
+display: flex;
+justify-content: space-between;
+align-items: center;
+}

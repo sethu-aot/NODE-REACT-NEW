@@ -27,7 +27,8 @@ app.post('/tasks', (req, res) => {
     if (!taskTitle || !taskDescription || !dueDate) {
         return res.status(400).json({ error: "Invalid input: Title/Description/Due Date is absent" });
     }
-    const newTask = { id, taskTitle, taskDescription, dueDate, isCompleted: false };
+    const createdAt = Date.now(); // Add a createdAt timestamp
+    const newTask = { id, taskTitle, taskDescription, dueDate, createdAt, isCompleted: false };
     datas.push(newTask);
     res.json(newTask);
 });
@@ -56,6 +57,17 @@ app.patch('/tasks/:id/status', (req, res) => {
     task.isCompleted = isCompleted;
     res.json(task);
 });
+
+//delete function correct
+
+app.delete('/tasks/completed', (req, res) => {
+    const remainingTasks = datas.filter(task => !task.isCompleted);
+    const deletedCount = datas.length - remainingTasks.length;
+    datas.length = 0; // Clear the original array
+    datas.push(...remainingTasks); // Add remaining tasks back
+    res.json({ message: `${deletedCount} completed tasks deleted` });
+});
+
 
 app.delete('/tasks/:id', (req, res) => {
     const id = req.params.id;
