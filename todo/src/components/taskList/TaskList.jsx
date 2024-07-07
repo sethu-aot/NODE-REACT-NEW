@@ -4,10 +4,19 @@ import React from 'react';
 import './TaskList.css';
 import editButton from '../../assets/images/edit.svg';
 import deleteButton from '../../assets/images/delete.svg';
+import greendot from '../../assets/images/greendot.svg';
+import yellowdot from '../../assets/images/yellowdot.svg';
+import calendar from '../../assets/images/calendar.svg'
+
 
 function TaskList({ tasks, handleTaskStatusChange, displayEditTaskModal, displayDeleteModal, clearCompletedTasks }) {
   const activeTasks = tasks.filter(task => !task.isCompleted);
   const completedTasks = tasks.filter(task => task.isCompleted);
+
+  const isOverdue = (dueDate) => {
+    const currentDate = new Date();
+    return new Date(dueDate) < currentDate;
+  };
 
   return (
     <div>
@@ -29,14 +38,27 @@ function TaskList({ tasks, handleTaskStatusChange, displayEditTaskModal, display
               </div>
               <div className='taskCardContents'>
                 <div className='taskCardHeader'>
+                  <div className='taskCardSubHeader'>
                   <h3>{task.taskTitle}</h3>
+                  {task.isCompleted ? (
+                    <img src={greendot} alt="Completed task" />
+                  ) : (
+                    <img src={yellowdot} alt="Active task" />
+                  )}
+
+                  </div>
                   <div className='taskCardButtons'>
                     <img src={editButton} alt="edit button" onClick={() => displayEditTaskModal(task)} />
                     <img src={deleteButton} alt="delete button" onClick={() => displayDeleteModal(task.id)} /> {/* Pass task ID */}
                   </div>
                 </div>
                 <p>{task.taskDescription}</p>
-                <p>by {task.dueDate}</p>
+
+                <div className="dueDate ">
+                <img src={calendar} alt="calander" />
+                <p className={isOverdue(task.dueDate) ? 'overdue' : ''}>by {task.dueDate}</p>
+
+                </div>
               </div>
             </li>
           ))}
@@ -45,7 +67,8 @@ function TaskList({ tasks, handleTaskStatusChange, displayEditTaskModal, display
       
       <div className="completedTasksHeading">
         <h2>Completed Tasks</h2>
-        <button onClick={clearCompletedTasks}>Clear Completed Tasks</button>
+        
+        <button className='clearTasksBtn' onClick={clearCompletedTasks}>Clear Completed Tasks</button>
       </div>
       
       {completedTasks.length === 0 ? (
@@ -65,14 +88,27 @@ function TaskList({ tasks, handleTaskStatusChange, displayEditTaskModal, display
               </div>
               <div className='taskCardContents'>
                 <div className='taskCardHeader'>
+                  <div className="taskCardSubHeader">
                   <h3>{task.taskTitle}</h3>
+                  {task.isCompleted ? (
+                    <img src={greendot} alt="Completed task" />
+                  ) : (
+                    <img src={yellowdot} alt="Active task" />
+                  )}
+
+                  </div>
                   <div className='taskCardButtons'>
                     <img src={editButton} alt="edit button" onClick={() => displayEditTaskModal(task)} />
                     <img src={deleteButton} alt="delete button" onClick={() => displayDeleteModal(task.id)} /> {/* Pass task ID */}
                   </div>
                 </div>
                 <p>{task.taskDescription}</p>
+
+                <div className="dueDate">
+                <img src={calendar} alt="calander" />
                 <p>by {task.dueDate}</p>
+
+                </div>
               </div>
             </li>
           ))}

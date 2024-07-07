@@ -50,3 +50,33 @@ display: flex;
 justify-content: space-between;
 align-items: center;
 }
+
+.taskCardSubHeader {
+    display: flex;
+    gap: 10px;
+}
+
+.clearTasksBtn {
+    max-width: 205px;
+    padding: 10px 20px;
+    gap: 8px;
+    border-radius: 5px;
+    border: 1px solid #0C39C7;
+    background-color: white;
+    color: #0C39C7;
+
+}
+
+.overdue {
+    background: #C035030F;
+    color: #C03503;
+    display: flex;
+    max-width: 130px;
+
+
+  }
+  
+  .dueDate {
+    display: flex;
+    gap: 10px;
+  }
