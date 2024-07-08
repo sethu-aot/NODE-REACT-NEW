@@ -82,6 +82,8 @@ align-items: center;
   .dueDate {
     display: flex;
     gap: 10px;
+    font-size: 14px
+    
   }
 
   .taskCardContents h3, p{
