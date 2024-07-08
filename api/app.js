@@ -12,15 +12,8 @@ app.get('/tasks', (req, res) => {
     res.json(datas);
 });
 
-app.get('/tasks/:id', (req, res) => {
-    const id = req.params.id;
-    const task = datas.find(task => task.id == id);
-    if (!task) {
-        return res.status(404).json({ error: "No task found with that ID" });
-    }
-    res.json(task);
-});
 
+// Task creating function
 app.post('/tasks', (req, res) => {
     const { taskTitle, taskDescription, dueDate } = req.body;
     const id = uuidv4();
@@ -33,6 +26,8 @@ app.post('/tasks', (req, res) => {
     res.json(newTask);
 });
 
+
+// Function to edit task
 app.put('/tasks/:id', (req, res) => {
     const id = req.params.id;
     const { taskTitle, taskDescription, dueDate, isCompleted } = req.body;
@@ -47,7 +42,9 @@ app.put('/tasks/:id', (req, res) => {
     res.json(task);
 });
 
-app.patch('/tasks/:id/status', (req, res) => {
+
+// Function to update completed task status
+app.put('/tasks/:id/status', (req, res) => {
     const id = req.params.id;
     const { isCompleted } = req.body;
     const task = datas.find(task => task.id == id);
@@ -58,8 +55,8 @@ app.patch('/tasks/:id/status', (req, res) => {
     res.json(task);
 });
 
-//delete function correct
 
+//Clear completed task function
 app.delete('/tasks/completed', (req, res) => {
     const remainingTasks = datas.filter(task => !task.isCompleted);
     const deletedCount = datas.length - remainingTasks.length;
@@ -69,6 +66,7 @@ app.delete('/tasks/completed', (req, res) => {
 });
 
 
+// Delete task function
 app.delete('/tasks/:id', (req, res) => {
     const id = req.params.id;
     const taskIndex = datas.findIndex(task => task.id == id);
