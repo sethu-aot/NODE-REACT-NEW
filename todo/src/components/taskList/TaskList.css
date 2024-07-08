@@ -43,6 +43,9 @@
 
 .taskCardContents {
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
 }
 
 .completedTasksHeading {
@@ -79,4 +82,9 @@ align-items: center;
   .dueDate {
     display: flex;
     gap: 10px;
+  }
+
+  .taskCardContents h3, p{
+    margin: 0;
+    
   }
